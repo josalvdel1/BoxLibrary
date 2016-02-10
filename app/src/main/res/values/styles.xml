@@ -9,7 +9,7 @@
     <style name="FullscreenTheme" parent="AppTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:windowBackground">@null</item>
+        <item name="android:windowBackground">@color/activity_background</item>
     </style>
 
 
