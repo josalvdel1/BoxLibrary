@@ -1,9 +1,10 @@
 package com.josalvdel1.boxlibrary;
 
+import com.josalvdel1.boxlibrary.data.DataModule;
+import com.josalvdel1.boxlibrary.ui.UiModule;
 import com.josalvdel1.boxlibrary.ui.activity.LibraryActivity;
 import com.josalvdel1.boxlibrary.ui.activity.LoginActivity;
-import com.josalvdel1.boxlibrary.ui.fragment.LibraryGridFragment;
-import com.josalvdel1.boxlibrary.ui.fragment.LibraryListFragment;
+import com.josalvdel1.boxlibrary.ui.fragment.LibraryFragment;
 
 import javax.inject.Singleton;
 
@@ -12,6 +13,8 @@ import dagger.Provides;
 
 @Module(
         includes = {
+                UiModule.class,
+                DataModule.class,
         },
         injects = {
                 LibraryBoxApplication.class,
@@ -21,8 +24,7 @@ import dagger.Provides;
                 LibraryActivity.class,
 
                 //Fragments
-                LibraryGridFragment.class,
-                LibraryListFragment.class,
+                LibraryFragment.class,
         },
         library = true)
 

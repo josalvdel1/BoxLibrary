@@ -1,6 +1,6 @@
 package com.josalvdel1.boxlibrary.ui.presenter;
 
-public interface Presenter {
+public interface BasePresenter {
 
     void init();
 

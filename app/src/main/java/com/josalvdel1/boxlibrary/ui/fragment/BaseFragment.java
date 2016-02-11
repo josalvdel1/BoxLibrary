@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 
 import com.josalvdel1.boxlibrary.LibraryBoxApplication;
 
+import butterknife.ButterKnife;
+
 /**
  * Base fragment to provide DI, VI and share common logic among all fragments
  */
@@ -22,9 +24,15 @@ public abstract class BaseFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(getLayout(), container, false);
+        View view = inflater.inflate(getLayout(), container, false);
+        ButterKnife.bind(this, view);
+        loadView();
+        return view;
+
     }
 
     public abstract int getLayout();
+
+    public abstract void loadView();
 }
 
