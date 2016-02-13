@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">BoxLibrary</string>
+    <string name="activity_library_title">My Books</string>
 </resources>

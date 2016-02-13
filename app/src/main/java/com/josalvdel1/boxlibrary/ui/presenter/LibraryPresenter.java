@@ -2,13 +2,12 @@ package com.josalvdel1.boxlibrary.ui.presenter;
 
 import android.support.annotation.NonNull;
 
-import com.dropbox.core.v2.DbxFiles;
-import com.josalvdel1.boxlibrary.data.MockService;
+import com.josalvdel1.boxlibrary.BoxLibraryApplication;
 import com.josalvdel1.boxlibrary.data.task.DownloadFilesTask;
+import com.josalvdel1.boxlibrary.data.task.GetLocalBooksTask;
 import com.josalvdel1.boxlibrary.data.task.SearchFilesTask;
 import com.josalvdel1.boxlibrary.entities.Book;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -18,13 +17,16 @@ import javax.inject.Singleton;
 @Singleton
 public class LibraryPresenter implements BasePresenter {
 
-
     private LibraryView libraryView;
 
+    @Inject
+    BoxLibraryApplication application;
     @Inject
     Provider<SearchFilesTask> searchFilesTaskProvider;
     @Inject
     Provider<DownloadFilesTask> downloadFilesTaskProvider;
+    @Inject
+    Provider<GetLocalBooksTask> getBooksTaskProvider;
 
     public LibraryPresenter() {
     }
@@ -36,8 +38,24 @@ public class LibraryPresenter implements BasePresenter {
 
     @Override
     public void resume() {
-        libraryView.showBooks(MockService.getMockBooks());
-        searchBooks(new SearchFilesTask.Callback() {
+        getBooksTaskProvider.get().setCallback(new GetLocalBooksTask.Callback() {
+            @Override
+            public void onBooksAvailable(List<Book> books) {
+                libraryView.showBooks(books);
+            }
+
+            @Override
+            public void onBookAvailable(Book book) {
+                libraryView.showNewBook(book);
+            }
+
+            @Override
+            public void onError() {
+                libraryView.showError();
+            }
+        }).execute();
+
+        /*searchBooks(new SearchFilesTask.Callback() {
             @Override
             public void onSearchComplete(DbxFiles.SearchResult searchResult) {
                 ArrayList<DbxFiles.Metadata> metadataList = new ArrayList<>();
@@ -61,7 +79,7 @@ public class LibraryPresenter implements BasePresenter {
             public void onError() {
 
             }
-        });
+        });*/
     }
 
     @Override
@@ -77,12 +95,20 @@ public class LibraryPresenter implements BasePresenter {
         searchFilesTaskProvider.get().setCallback(callback).execute();
     }
 
+    public void onBookClicked(Book book) {
+        libraryView.onBookClicked(book);
+    }
+
     public interface LibraryView {
         void showLoading();
 
         void hideLoading();
 
         void showBooks(List<Book> books);
+
+        void showNewBook(Book book);
+
+        void onBookClicked(Book book);
 
         void showEmpty();
 

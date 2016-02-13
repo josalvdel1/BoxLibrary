@@ -5,7 +5,7 @@ import android.content.Context;
 
 import dagger.ObjectGraph;
 
-public class LibraryBoxApplication extends Application {
+public class BoxLibraryApplication extends Application {
 
     private ObjectGraph objectGraph;
 
@@ -20,7 +20,7 @@ public class LibraryBoxApplication extends Application {
         objectGraph.inject(object);
     }
 
-    public static LibraryBoxApplication get(Context context) {
-        return (LibraryBoxApplication)context.getApplicationContext();
+    public static BoxLibraryApplication get(Context context) {
+        return (BoxLibraryApplication)context.getApplicationContext();
     }
 }

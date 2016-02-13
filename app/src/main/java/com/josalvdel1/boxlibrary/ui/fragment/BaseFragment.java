@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.josalvdel1.boxlibrary.LibraryBoxApplication;
+import com.josalvdel1.boxlibrary.BoxLibraryApplication;
 
 import butterknife.ButterKnife;
 
@@ -19,7 +19,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        LibraryBoxApplication.get(context).inject(this);
+        BoxLibraryApplication.get(context).inject(this);
     }
 
     @Override

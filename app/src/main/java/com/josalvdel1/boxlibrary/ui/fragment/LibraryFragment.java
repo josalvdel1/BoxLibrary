@@ -4,11 +4,13 @@ package com.josalvdel1.boxlibrary.ui.fragment;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.josalvdel1.boxlibrary.R;
 import com.josalvdel1.boxlibrary.entities.Book;
-import com.josalvdel1.boxlibrary.ui.LibraryAdapter;
+import com.josalvdel1.boxlibrary.ui.activity.BookDetailActivity;
+import com.josalvdel1.boxlibrary.ui.adapter;
 import com.josalvdel1.boxlibrary.ui.presenter.LibraryPresenter;
 
 import java.util.List;
@@ -17,6 +19,7 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 
+
 public class LibraryFragment extends BaseFragment implements LibraryPresenter.LibraryView {
 
     public static final String TAG = "grid_fragment";
@@ -24,11 +27,15 @@ public class LibraryFragment extends BaseFragment implements LibraryPresenter.Li
 
     @Inject
     LibraryPresenter libraryPresenter;
+
     @Inject
-    LibraryAdapter libraryAdapter;
+    adapter.LibraryAdapter libraryAdapter;
 
     @Bind(R.id.rv_books)
     RecyclerView rvBooks;
+
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
 
 
     @Override
@@ -40,12 +47,15 @@ public class LibraryFragment extends BaseFragment implements LibraryPresenter.Li
     @Override
     public void loadView() {
         loadGridView();
+        toolbar.setTitle(R.string.activity_library_title);
     }
+
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         libraryPresenter.setLibraryView(this);
+        rvBooks.setAdapter(libraryAdapter);
     }
 
     @Override
@@ -78,10 +88,18 @@ public class LibraryFragment extends BaseFragment implements LibraryPresenter.Li
     }
 
     @Override
-    public void showBooks(List<Book> books) {
-        libraryAdapter.setBooks(books);
-        rvBooks.setAdapter(libraryAdapter);
-        libraryAdapter.notifyDataSetChanged();
+    public void showBooks(List<Book> eBooks) {
+        libraryAdapter.setBooks(eBooks);
+    }
+
+    @Override
+    public void showNewBook(Book book) {
+        libraryAdapter.addBook(book);
+    }
+
+    @Override
+    public void onBookClicked(Book book) {
+        startActivity(BookDetailActivity.getLaunchIntent(getActivity(), book.getFilePath()));
     }
 
     @Override

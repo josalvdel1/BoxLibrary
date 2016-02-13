@@ -7,7 +7,7 @@ import android.util.Log;
 import com.dropbox.core.DbxException;
 import com.dropbox.core.v2.DbxClientV2;
 import com.dropbox.core.v2.DbxFiles;
-import com.josalvdel1.boxlibrary.LibraryBoxApplication;
+import com.josalvdel1.boxlibrary.BoxLibraryApplication;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -23,7 +23,7 @@ public class DownloadFilesTask extends AsyncTask<List<DbxFiles.Metadata>, Intege
     Callback callback;
 
     @Inject
-    public DownloadFilesTask(LibraryBoxApplication application, DbxClientV2 dbxClientV2) {
+    public DownloadFilesTask(BoxLibraryApplication application, DbxClientV2 dbxClientV2) {
         this.client = dbxClientV2;
         this.application = application;
     }

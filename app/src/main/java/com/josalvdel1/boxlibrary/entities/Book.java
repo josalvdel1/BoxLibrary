@@ -1,16 +1,23 @@
 package com.josalvdel1.boxlibrary.entities;
 
-import java.io.Serializable;
+import android.graphics.Bitmap;
 
-public class Book implements Serializable {
+public class Book {
 
     private String title;
-    private String cover;
+    private Bitmap cover;
+    private String filePath;
+    private String author;
+    private String description;
 
-    public Book(String title, String cover) {
-        this.title = title;
+    public Book(String title, Bitmap cover, String author, String description, String filePath) {
         this.cover = cover;
+        this.title = title;
+        this.author = author;
+        this.filePath = filePath;
+        this.description = description;
     }
+
 
     public String getTitle() {
         return title;
@@ -20,11 +27,31 @@ public class Book implements Serializable {
         this.title = title;
     }
 
-    public String getCover() {
+    public Bitmap getCover() {
         return cover;
     }
 
-    public void setCover(String cover) {
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setCover(Bitmap cover) {
         this.cover = cover;
     }
 
@@ -33,10 +60,9 @@ public class Book implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Book book = (Book) o;
+        Book Book = (Book) o;
 
-        return title.equals(book.title);
-
+        return title.equals(Book.title);
     }
 
     @Override

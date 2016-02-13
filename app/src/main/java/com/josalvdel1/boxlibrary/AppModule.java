@@ -1,7 +1,9 @@
 package com.josalvdel1.boxlibrary;
 
 import com.josalvdel1.boxlibrary.data.DataModule;
+import com.josalvdel1.boxlibrary.epub.EpubModule;
 import com.josalvdel1.boxlibrary.ui.UiModule;
+import com.josalvdel1.boxlibrary.ui.activity.BookDetailActivity;
 import com.josalvdel1.boxlibrary.ui.activity.LibraryActivity;
 import com.josalvdel1.boxlibrary.ui.activity.LoginActivity;
 import com.josalvdel1.boxlibrary.ui.fragment.LibraryFragment;
@@ -15,13 +17,15 @@ import dagger.Provides;
         includes = {
                 UiModule.class,
                 DataModule.class,
+                EpubModule.class,
         },
         injects = {
-                LibraryBoxApplication.class,
+                BoxLibraryApplication.class,
 
                 //Activities
                 LoginActivity.class,
                 LibraryActivity.class,
+                BookDetailActivity.class,
 
                 //Fragments
                 LibraryFragment.class,
@@ -30,15 +34,15 @@ import dagger.Provides;
 
 public final class AppModule {
 
-    private final LibraryBoxApplication application;
+    private final BoxLibraryApplication application;
 
-    public AppModule(LibraryBoxApplication application) {
+    public AppModule(BoxLibraryApplication application) {
         this.application = application;
     }
 
     @Provides
     @Singleton
-    LibraryBoxApplication provideApplication() {
+    BoxLibraryApplication provideApplication() {
         return application;
     }
 }
