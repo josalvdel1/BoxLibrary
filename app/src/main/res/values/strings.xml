@@ -10,4 +10,6 @@
     <string name="show_as_list_label">Show as list</string>
 
     <string name="sign_in_dropbox">Sign in with Dropbox®</string>
+    <string name="library_empty_view_text">No books yet :(</string>
+    <string name="error">Something went wrong</string>
 </resources>

@@ -34,8 +34,13 @@ public class SessionManager {
     }
 
     public boolean isUserLogged() {
-        return sharePreferences.getString(token_key, null) != null;
+        return getAuthToken() != null;
     }
+
+    public String getAuthToken() {
+        return sharePreferences.getString(token_key, null);
+    }
+
 
     public void startAuthProcess() {
         Auth.startOAuth2Authentication(application, BuildConfig.APP_KEY);

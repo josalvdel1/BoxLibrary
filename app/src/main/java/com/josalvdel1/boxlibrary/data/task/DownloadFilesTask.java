@@ -8,6 +8,7 @@ import com.dropbox.core.DbxException;
 import com.dropbox.core.v2.DbxClientV2;
 import com.dropbox.core.v2.DbxFiles;
 import com.josalvdel1.boxlibrary.BoxLibraryApplication;
+import com.josalvdel1.boxlibrary.data.NetworkManager;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -18,14 +19,16 @@ import javax.inject.Inject;
 
 public class DownloadFilesTask extends AsyncTask<List<DbxFiles.Metadata>, Integer, Boolean> {
 
-    DbxClientV2 client;
-    Application application;
-    Callback callback;
+    private NetworkManager networkManager;
+    private DbxClientV2 client;
+    private Application application;
+    private Callback callback;
 
     @Inject
-    public DownloadFilesTask(BoxLibraryApplication application, DbxClientV2 dbxClientV2) {
+    public DownloadFilesTask(BoxLibraryApplication application, DbxClientV2 dbxClientV2, NetworkManager networkManager) {
         this.client = dbxClientV2;
         this.application = application;
+        this.networkManager = networkManager;
     }
 
     @Override
@@ -33,6 +36,9 @@ public class DownloadFilesTask extends AsyncTask<List<DbxFiles.Metadata>, Intege
         super.onPreExecute();
         if (callback == null) {
             throw new IllegalStateException("Callback should not be null");
+        }
+        if (!networkManager.hasNetworkConnection()) {
+            cancel(true);
         }
     }
 
@@ -45,15 +51,27 @@ public class DownloadFilesTask extends AsyncTask<List<DbxFiles.Metadata>, Intege
                     dir.mkdirs();
                 }
                 File file = new File(dir.getPath(), fileData.name);
-
-                client.files.downloadBuilder(fileData.pathLower).run(new FileOutputStream(file));
-                Log.d("DownloadFileTask", "File " + fileData.name + " downloaded");
-
+                if (!file.exists()) {
+                    client.files.downloadBuilder(fileData.pathLower).run(new FileOutputStream(file));
+                    Log.d("DownloadFileTask", "File " + fileData.name + " downloaded");
+                }
             } catch (DbxException | IOException e) {
                 Log.e(e.getClass().getName(), e.getMessage());
             }
         }
         return true;
+    }
+
+    @Override
+    protected void onPostExecute(Boolean aBoolean) {
+        super.onPostExecute(aBoolean);
+        callback.onDownloadsComplete();
+    }
+
+    @Override
+    protected void onCancelled() {
+        super.onCancelled();
+        callback.onError();
     }
 
     public DownloadFilesTask setCallback(Callback callback) {

@@ -50,4 +50,9 @@
         <item name="android:textColor">@android:color/white</item>
     </style>
 
+    <style name="AppTheme.ProgressStyle" parent="Widget.AppCompat.ProgressBar">
+        <item name="android:indeterminate">true</item>
+    </style>
+
+
 </resources>

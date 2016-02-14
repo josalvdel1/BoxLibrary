@@ -83,11 +83,13 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.BooksVie
 
     public void sortBooksByTitle() {
         Collections.sort(books, new TitleComparator());
+        libraryPresenter.updateBooks(books);
         notifyDataSetChanged();
     }
 
     public void sortBooksByDate() {
         Collections.sort(books, new DateComparator());
+        libraryPresenter.updateBooks(books);
         notifyDataSetChanged();
     }
 

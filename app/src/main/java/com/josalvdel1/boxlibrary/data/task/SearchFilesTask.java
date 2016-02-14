@@ -6,17 +6,20 @@ import android.util.Log;
 import com.dropbox.core.DbxException;
 import com.dropbox.core.v2.DbxClientV2;
 import com.dropbox.core.v2.DbxFiles;
+import com.josalvdel1.boxlibrary.data.NetworkManager;
 
 import javax.inject.Inject;
 
 public class SearchFilesTask extends AsyncTask<String, Integer, DbxFiles.SearchResult> {
 
+    private NetworkManager networkManager;
     private DbxClientV2 client;
     private Callback callback;
 
     @Inject
-    public SearchFilesTask(DbxClientV2 client) {
+    public SearchFilesTask(DbxClientV2 client, NetworkManager networkManager) {
         this.client = client;
+        this.networkManager = networkManager;
     }
 
     @Override
@@ -24,6 +27,9 @@ public class SearchFilesTask extends AsyncTask<String, Integer, DbxFiles.SearchR
         super.onPreExecute();
         if (callback == null) {
             throw new IllegalStateException("Callback should not be null");
+        }
+        if (!networkManager.hasNetworkConnection()) {
+            cancel(true);
         }
     }
 
@@ -44,6 +50,12 @@ public class SearchFilesTask extends AsyncTask<String, Integer, DbxFiles.SearchR
     protected void onPostExecute(DbxFiles.SearchResult searchResult) {
         super.onPostExecute(searchResult);
         callback.onSearchComplete(searchResult);
+    }
+
+    @Override
+    protected void onCancelled() {
+        super.onCancelled();
+        callback.onError();
     }
 
     public SearchFilesTask setCallback(Callback callback) {

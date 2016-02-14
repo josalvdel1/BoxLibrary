@@ -53,6 +53,7 @@ public class BookDetailActivity extends BaseActivity implements BookDetailPresen
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         bookPath = getIntent().getStringExtra(EXTRA_BOOK_PATH);
 
         setSupportActionBar(toolbar);
