@@ -1,4 +1,13 @@
 <resources>
     <string name="app_name">BoxLibrary</string>
     <string name="activity_library_title">My Books</string>
+
+    <string name="menu_sort_title">Sorting</string>
+    <string name="sort_by_name_label">Sort by titles</string>
+    <string name="sort_by_date_label">Sort by date</string>
+
+    <string name="show_as_grid_label">Show as grid</string>
+    <string name="show_as_list_label">Show as list</string>
+
+    <string name="sign_in_dropbox">Sign in with Dropbox®</string>
 </resources>

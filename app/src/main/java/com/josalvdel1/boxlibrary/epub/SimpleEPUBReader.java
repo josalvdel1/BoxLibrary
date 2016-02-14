@@ -4,8 +4,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Date;
 
 import javax.inject.Inject;
 
@@ -27,7 +29,7 @@ public class SimpleEpubReader {
         Book book = null;
         try {
             book = reader.readEpub(new FileInputStream(epubPath));
-        } catch (IOException e) {
+        } catch (Exception e) {
             Log.e(TAG, "Operation READ failed " + e.getMessage());
         }
         return book;
@@ -46,9 +48,11 @@ public class SimpleEpubReader {
     public com.josalvdel1.boxlibrary.entities.Book getBook(String bookPath) {
         com.josalvdel1.boxlibrary.entities.Book book = null;
 
+        File file = new File(bookPath);
+
         Book epub = readEpub(bookPath);
         if (epub.getGuide().getReferences().size() != 0) {
-            book = new com.josalvdel1.boxlibrary.entities.Book(epub.getTitle(), getCoverBitmap(epub), null, null, bookPath);
+            book = new com.josalvdel1.boxlibrary.entities.Book(epub.getTitle(), getCoverBitmap(epub), null, null, bookPath, new Date(file.lastModified()));
 
             Metadata metadata = epub.getMetadata();
             if (metadata != null) {

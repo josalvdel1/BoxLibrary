@@ -6,7 +6,7 @@
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:elevation="@dimen/toolbar_elevation">
 
@@ -14,7 +14,7 @@
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/collapsingToolbarLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="200dp"
             app:collapsedTitleTextAppearance="@style/AppTheme.TextAppearance.CollapsedTitle"
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleTextAppearance="@style/AppTheme.TextAppearance.ExpandedTitle"

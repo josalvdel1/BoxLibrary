@@ -47,6 +47,11 @@ public class BookDetailPresenter implements BasePresenter {
     public void pause() {
     }
 
+    @Override
+    public void destroy() {
+        detailView = null;
+    }
+
     public void setBookPath(String path) {
         this.path = path;
     }

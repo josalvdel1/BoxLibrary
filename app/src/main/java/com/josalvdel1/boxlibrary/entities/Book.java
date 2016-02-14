@@ -2,6 +2,8 @@ package com.josalvdel1.boxlibrary.entities;
 
 import android.graphics.Bitmap;
 
+import java.util.Date;
+
 public class Book {
 
     private String title;
@@ -9,13 +11,15 @@ public class Book {
     private String filePath;
     private String author;
     private String description;
+    private Date fileDate;
 
-    public Book(String title, Bitmap cover, String author, String description, String filePath) {
+    public Book(String title, Bitmap cover, String author, String description, String filePath, Date fileDate) {
         this.cover = cover;
         this.title = title;
         this.author = author;
         this.filePath = filePath;
         this.description = description;
+        this.fileDate = fileDate;
     }
 
 
@@ -49,6 +53,10 @@ public class Book {
 
     public String getDescription() {
         return description;
+    }
+
+    public Date getFileDate() {
+        return fileDate;
     }
 
     public void setCover(Bitmap cover) {

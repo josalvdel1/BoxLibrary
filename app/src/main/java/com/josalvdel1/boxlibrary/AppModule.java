@@ -1,5 +1,8 @@
 package com.josalvdel1.boxlibrary;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import com.josalvdel1.boxlibrary.data.DataModule;
 import com.josalvdel1.boxlibrary.epub.EpubModule;
 import com.josalvdel1.boxlibrary.ui.UiModule;
@@ -44,6 +47,12 @@ public final class AppModule {
     @Singleton
     BoxLibraryApplication provideApplication() {
         return application;
+    }
+
+    @Provides
+    @Singleton
+    SharedPreferences preferences() {
+        return application.getSharedPreferences(application.getString(R.string.app_name), Context.MODE_PRIVATE);
     }
 }
 

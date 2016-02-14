@@ -87,6 +87,11 @@ public class LibraryPresenter implements BasePresenter {
 
     }
 
+    @Override
+    public void destroy() {
+        libraryView = null;
+    }
+
     public void setLibraryView(@NonNull LibraryView libraryView) {
         this.libraryView = libraryView;
     }
