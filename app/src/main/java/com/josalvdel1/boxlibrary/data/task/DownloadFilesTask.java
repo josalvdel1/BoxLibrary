@@ -13,6 +13,7 @@ import com.josalvdel1.boxlibrary.data.NetworkManager;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -44,9 +45,10 @@ public class DownloadFilesTask extends AsyncTask<List<DbxFiles.Metadata>, Intege
 
     @Override
     protected Boolean doInBackground(List<DbxFiles.Metadata>... filesData) {
+        List<File> syncFiles = new ArrayList<>();
+        File dir = application.getExternalFilesDir("books");
         for (DbxFiles.Metadata fileData : filesData[0]) {
             try {
-                File dir = application.getExternalFilesDir("books");
                 if (!dir.exists()) {
                     dir.mkdirs();
                 }
@@ -55,8 +57,18 @@ public class DownloadFilesTask extends AsyncTask<List<DbxFiles.Metadata>, Intege
                     client.files.downloadBuilder(fileData.pathLower).run(new FileOutputStream(file));
                     Log.d("DownloadFileTask", "File " + fileData.name + " downloaded");
                 }
+                syncFiles.add(file);
             } catch (DbxException | IOException e) {
                 Log.e(e.getClass().getName(), e.getMessage());
+            }
+        }
+
+        File[] files = dir.listFiles();
+        if (files.length > 0) {
+            for (File f : files) {
+                if (!syncFiles.contains(f)) {
+                    f.delete();
+                }
             }
         }
         return true;

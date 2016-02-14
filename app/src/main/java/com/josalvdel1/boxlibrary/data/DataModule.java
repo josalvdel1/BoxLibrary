@@ -12,7 +12,8 @@ public class DataModule {
 
     @Provides
     public DbxClientV2 provideDbxClient(SessionManager sessionManager) {
-        DbxClientV2 clientV2 = new DbxClientV2(new DbxRequestConfig("Test1", "es_ES"), sessionManager.getAuthToken());
+        DbxClientV2 clientV2 = new DbxClientV2(new DbxRequestConfig("BoxLibrary", "es_ES"),
+                sessionManager.getAuthToken());
         return clientV2;
     }
 }
